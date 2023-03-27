@@ -1,0 +1,37 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+on:
+  push:
+    branches: ['main']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: '16.15.0'
+      - name: Install npm dependencies
+        run: yarn install
+      - name: Run build task
+        run: npm run build
+      - name: Create deploy package
+        run: mkdir package && cp -a docs/.vuepress/dist docker-compose.yml Dockerfile package
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.2.11
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_SSH_KEY }}
+          SOURCE: 'package'
+          REMOTE_HOST: ${{ secrets.ALIYUN_REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.ALIYUN_REMOTE_USER }}
+          TARGET: ${{ secrets.ALIYUN_REMOTE_TARGET }}
+      - name: Build and Run Container
+        uses: D3rHase/ssh-command-action@v0.2.1
+        with:
+          HOST: ${{secrets.ALIYUN_REMOTE_HOST}}
+          USER: ${{ secrets.ALIYUN_REMOTE_USER }}
+          PRIVATE_SSH_KEY: ${{ secrets.ALIYUN_SSH_KEY }}
+          COMMAND: 'cd ${{ secrets.ALIYUN_REMOTE_TARGET }}/package && docker-compose up --build -d'
