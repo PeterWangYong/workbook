@@ -40,7 +40,7 @@ function genThemeConfig(dir_name) {
   const items = [];
   res = deepCheck(dir_path);
   res.forEach((item) => {
-    const link = item.path.replace('/app/docs', '');
+    const link = item.path.replace('/Users/wangyong/Desktop/workbook/docs', '');
     text = path.basename(link);
     if (item.isDirectory()) {
       items.push({
@@ -65,8 +65,8 @@ Object.keys(nav).forEach((item) => {
   genThemeConfig(item);
 });
 
-console.log(themeConfig.nav[1].items);
-console.log(themeConfig.sidebar);
+// console.log(themeConfig.nav[1].items);
+// console.log(themeConfig.sidebar);
 
 module.exports = {
   title: '皮特王同学',
