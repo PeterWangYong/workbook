@@ -75,7 +75,7 @@ module.exports = {
   themeConfig: {
     ...themeConfig,
     sidebarDepth: 2,
-    repo: 'PeterWangYong/techBook',
+    repo: 'PeterWangYong/workbook',
     repoLabel: 'GitHub',
     lastUpdated: '上次更新',
   },
