@@ -40,7 +40,8 @@ function genThemeConfig(dir_name) {
   const items = [];
   res = deepCheck(dir_path);
   res.forEach((item) => {
-    const link = item.path.replace('/Users/wangyong/Documents/workbook/docs', '');
+    // const link = item.path.replace('/Users/wangyong/Documents/workbook/docs', '');
+    const link = item.path.replace('/home/runner/work/workbook/workbook/docs', '');
     text = path.basename(link);
     if (item.isDirectory()) {
       items.push({
